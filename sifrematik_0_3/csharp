@@ -1,0 +1,33 @@
+using System;
+using System.Data.SqlClient;
+
+class Program
+{
+    static void Main()
+    {
+        string connectionString = "Data Source=LAPTOP-H2F7LCKB;Initial Catalog=sifrematik;User ID=sa;Password=Enver.1903";
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            try
+            {
+                connectionString.Open();
+                string query = "SELECT id, kullanici_adi, sifre, mail FROM sifrematik "; // Gerçek sütun isimlerini ekleyin
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader["id"]); // İlgili sütun adını ekleyin
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Hata: " + ex.Message);
+            }
+        }
+    }
+}
